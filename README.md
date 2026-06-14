@@ -1,3 +1,4 @@
+![Architecture](docs/helmatform.jpg)
 folder structure:
 
 ```
