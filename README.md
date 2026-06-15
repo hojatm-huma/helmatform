@@ -71,3 +71,13 @@ Why?
 - our developers needs to learn only yaml
 - the yaml spec is well talked about in the company
 - don't reinvent the wheel at all. Use any opensource tool that is possible
+
+Dev environment:
+- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+
+TODOs:
+[X] s3 module: create a s3 and store credentials in an externalsecret
+[X] setup the dev env ( minikube, aws creds )
+[] make tofu apply the helm in minikube (to learn what is the proper syntax for helm chart)
+[] write helm chart generator
+[] 
