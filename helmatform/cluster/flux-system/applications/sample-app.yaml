@@ -38,7 +38,7 @@ spec:
         - from: "@chart/"
           to: "@artifact/"
         - from: "@repo/deploy/values.yaml"
-          to: "@artifact/values.yaml"
+          to: "@artifact/base-chart/values.yaml"
           strategy: Merge
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
