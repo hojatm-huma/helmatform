@@ -5,3 +5,4 @@ resources:
 - gotk-sync.yaml
 - sources/oci.yaml
 - applications/sample-app.yaml
+- applications/tofu-controller.yaml
