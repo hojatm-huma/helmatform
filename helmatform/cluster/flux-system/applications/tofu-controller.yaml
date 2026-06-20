@@ -56,7 +56,6 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: helmatform
-  namespace: flux-system
 spec:
   interval: 1m
   url: https://github.com/hojatm-huma/helmatform
@@ -67,10 +66,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: sample-app-s3
-  namespace: flux-system
+  namespace: sample-app
 data:
-  bucket_name: helmatform-sample-app-s3
-  iam_user_name: helmatform-sample-app-s3
+  bucket_name: helmatform-sample-app-s3-in-ns
+  iam_user_name: helmatform-sample-app-s3-in-ns
 ---
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
