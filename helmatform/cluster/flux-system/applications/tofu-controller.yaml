@@ -63,6 +63,15 @@ spec:
   ref:
     branch: main
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-app-s3
+  namespace: flux-system
+data:
+  bucket_name: helmatform-sample-app-s3
+  iam_user_name: helmatform-sample-app-s3
+---
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
@@ -76,6 +85,11 @@ spec:
     kind: GitRepository
     name: helmatform
     namespace: flux-system
+  varsFrom:
+    - kind: ConfigMap
+      name: sample-app-s3
+  writeOutputsToSecret:
+    name: sample-app-s3-outputs
   runnerPodTemplate:
     spec:
       envFrom:
