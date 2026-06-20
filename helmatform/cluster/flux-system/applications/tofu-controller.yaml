@@ -77,6 +77,7 @@ spec:
     name: helmatform
     namespace: flux-system
   runnerPodTemplate:
-    envFrom:
-      secretRef:
-        name: aws-cred
+    spec:
+      envFrom:
+        - secretRef:
+            name: aws-cred
