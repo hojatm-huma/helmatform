@@ -33,6 +33,7 @@ spec:
     remediation:
       retries: -1
   values:
+    allowCrossNamespaceRefs: true
     replicaCount: 3
     concurrency: 24
     resources:
@@ -56,6 +57,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: helmatform
+  namespace: flux-system
 spec:
   interval: 1m
   url: https://github.com/hojatm-huma/helmatform
