@@ -7,7 +7,7 @@ resource "aws_iam_user" "s3_user" {
 }
 
 resource "aws_iam_user_policy" "s3_user_policy" {
-  name = var.policy_name
+  name = "${var.iam_user_name}_policy"
   user = aws_iam_user.s3_user.name
 
   policy = jsonencode({
