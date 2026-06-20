@@ -52,6 +52,9 @@ spec:
         tag: v0.16.4
       grpc:
         maxMessageSize: 30
+      allowedNamespaces:
+        - sample-app
+        - flux-system
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
