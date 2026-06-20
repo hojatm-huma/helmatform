@@ -69,7 +69,7 @@ metadata:
   name: sample-app-s3
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10s
   approvePlan: auto
   path: ./tf-modules/s3/
   sourceRef:
