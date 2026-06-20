@@ -76,7 +76,7 @@ apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
   name: sample-app-s3
-  namespace: flux-system
+  namespace: sample-app
 spec:
   interval: 5s
   approvePlan: auto
