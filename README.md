@@ -78,6 +78,10 @@ Dev environment:
 TODOs:
 [X] s3 module: create a s3 and store credentials in an externalsecret
 [X] setup the dev env ( minikube, aws creds )
-[] make tofu apply the helm in minikube (to learn what is the proper syntax for helm chart)
+[x] make tofu apply the helm in minikube (to learn what is the proper syntax for helm chart)
+[x] move tofu runner into a separate namespace
+	Tofu is now creating resources and creating the output secret in the correct namespace. But aws-cres is added to the application ns. It's not good. We should find a solution for it. (Maybe IRSA)
 [] write helm chart generator
-[] 
+	write a python script to read tf-modules folder and create appropriate value file
+[] clean up flux yaml file folders and main kustomization
+[] use irsa instead of long lived aws tokens
