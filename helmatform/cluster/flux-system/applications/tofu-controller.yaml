@@ -80,4 +80,4 @@ spec:
     spec:
       envFrom:
         - secretRef:
-            name: aws-cred
+            name: aws-creds
