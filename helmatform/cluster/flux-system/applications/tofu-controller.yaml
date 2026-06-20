@@ -51,3 +51,32 @@ spec:
         tag: v0.16.4
       grpc:
         maxMessageSize: 30
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: helmatform
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/hojatm-huma/helmatform
+  ref:
+    branch: main
+---
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: sample-app-s3
+  namespace: flux-system
+spec:
+  interval: 1m
+  approvePlan: auto
+  path: ./tf-modules/s3/
+  sourceRef:
+    kind: GitRepository
+    name: helmatform
+    namespace: flux-system
+  runnerPodTemplate:
+    envFrom:
+      secretRef:
+        name: aws-cred
