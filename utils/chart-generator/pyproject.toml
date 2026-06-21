@@ -1,0 +1,11 @@
+[project]
+name = "chart-generator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "python-hcl2>=8.1.2",
+    "pyyaml>=6.0.3",
+    "ruff>=0.15.18",
+]
