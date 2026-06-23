@@ -1,4 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - "*.yaml"
+  - tofu_controller.yaml
+  - sample_app.yaml
+  - oci_repository.yaml
