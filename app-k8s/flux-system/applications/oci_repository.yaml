@@ -1,11 +1,11 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: base-chart
+  name: helmatform-chart
   namespace: flux-system
 spec:
   interval: 5m0s
-  url: oci://ghcr.io/hojatm-huma/base-chart
+  url: oci://ghcr.io/hojatm-huma/helmatform-chart
   secretRef:
     name: ghcr-secret
   layerSelector:

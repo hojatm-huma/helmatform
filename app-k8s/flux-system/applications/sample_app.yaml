@@ -25,7 +25,7 @@ spec:
   sources:
     - alias: chart
       kind: OCIRepository
-      name: base-chart
+      name: helmatform-chart
       namespace: flux-system
     - alias: repo
       kind: GitRepository
