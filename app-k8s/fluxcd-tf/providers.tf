@@ -10,7 +10,7 @@ terraform {
 
 provider "flux" {
   kubernetes = {
-    config_path = "helmatform-k8s-config"
+    config_path = ".kubeconfig"
   }
   git = {
     url = "https://github.com/hojatm-huma/helmatform.git"
