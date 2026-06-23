@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sample-app
+  labels:
+    name: sample-app
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: sample-app
+  namespace: sample-app
+spec:
+  interval: 1m
+  url: https://github.com/hojatm-huma/sample-app
+  ref:
+    branch: main
+---
+apiVersion: source.extensions.fluxcd.io/v1beta1
+kind: ArtifactGenerator
+metadata:
+  name: sample-app
+  namespace: sample-app
+spec:
+  sources:
+    - alias: chart
+      kind: OCIRepository
+      name: base-chart
+      namespace: flux-system
+    - alias: repo
+      kind: GitRepository
+      name: sample-app
+      namespace: sample-app
+  artifacts:
+    - name: sample-app
+      originRevision: "@chart"
+      copy:
+        - from: "@chart/"
+          to: "@artifact/"
+        - from: "@repo/deploy/values.yaml"
+          to: "@artifact/base-chart/values.yaml"
+          strategy: Merge
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sample-app
+  namespace: sample-app
+spec:
+  interval: 1m
+  chartRef:
+    kind: ExternalArtifact
+    name: sample-app

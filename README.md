@@ -86,3 +86,12 @@ TODOs:
 [] update documentation to contain new changes
 [] clean up flux yaml file folders and main kustomization
 [] use irsa instead of long lived aws tokens
+
+----
+how to make flux watch all dirs and subdirs?
+setup kind
+can we use existing github path with files?
+
+guide:
+1. setup kind
+2. setup flux cd
