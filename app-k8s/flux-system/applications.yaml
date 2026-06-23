@@ -19,6 +19,7 @@ spec:
     kind: GitRepository
     name: helmatform
   interval: 5s
+  prune: true
   path: ./app-k8s/flux-system/applications
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -31,4 +32,5 @@ spec:
     kind: GitRepository
     name: helmatform
   interval: 5s
+  prune: true
   path: ./app-k8s/flux-system/crds
