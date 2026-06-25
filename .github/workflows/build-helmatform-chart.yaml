@@ -57,4 +57,4 @@ jobs:
       - name: Push Helm chart
         working-directory: "chart"
         run: |
-          helm push "helmatform-chart-0.1.0.tgz" oci://ghcr.io/hojatm-huma/helmatform-chart
+          helm push "helmatform-chart-0.1.0.tgz" oci://ghcr.io/hojatm-huma
