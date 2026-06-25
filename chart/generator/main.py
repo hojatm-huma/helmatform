@@ -5,9 +5,9 @@ import yaml
 BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../..")
 )
-BASE_CHART_DIR = os.path.join(BASE_DIR, "base-chart")
+BASE_CHART_DIR = os.path.join(BASE_DIR, "chart/base-chart")
 TF_MODULE_DIR = os.path.join(BASE_DIR, "tf-modules")
-NEW_CHART_DIR = os.path.join(BASE_DIR, "helmatform-chart")
+NEW_CHART_DIR = os.path.join(BASE_DIR, "chart/helmatform-chart")
 
 
 def list_tf_modules() -> list[str]:

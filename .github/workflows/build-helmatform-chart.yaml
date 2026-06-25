@@ -1,0 +1,60 @@
+name: Build and Push Helmatform Chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "chart"
+      - ".github/workflows/build-helmatform-chart.yaml"
+
+  workflow_dispatch:
+
+env:
+  HELM_REGISTRY: oci://ghcr.io/hojatm-huma/helmatform-chart
+  CHART_PATH: ./charts/my-chart # Replace with your chart path
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "chart/generator/.python-version"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+
+      - name: Install python dependencies
+        working-directory: "./chart/generator"
+        run: uv sync --locked
+
+      - name: Generate the chart
+        working-directory: "./chart/generator"
+        run: uv run main.py
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v5
+        with:
+          version: "latest"
+        id: install
+
+      - name: Log in to Helm registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login \
+            ghcr.io \
+            --username "${{ github.actor }}" \
+            --password-stdin
+
+      - name: Package Helm chart
+        working-directory: "chart"
+        run: helm package helmatform-chart
+
+      - name: Push Helm chart
+        run: |
+          helm push "helmatform-chart-0.1.0.tgz" oci://ghcr.io/hojatm-huma/helmatform-chart
