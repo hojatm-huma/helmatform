@@ -10,10 +10,9 @@ on:
 
   workflow_dispatch:
 
-env:
-  HELM_REGISTRY: oci://ghcr.io/hojatm-huma/helmatform-chart
-  CHART_PATH: ./charts/my-chart # Replace with your chart path
-
+permissions:
+  contents: read
+  packages: write
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
