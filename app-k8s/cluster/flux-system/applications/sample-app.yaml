@@ -1,3 +1,19 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: helmatform-chart
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  url: oci://ghcr.io/hojatm-huma/helmatform-chart
+  secretRef:
+    name: ghcr-secret
+  layerSelector:
+    mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+    operation: copy
+  ref:
+    semver: "0.1.0"
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -25,7 +41,7 @@ spec:
   sources:
     - alias: chart
       kind: OCIRepository
-      name: base-chart
+      name: helmatform-chart
       namespace: flux-system
     - alias: repo
       kind: GitRepository
