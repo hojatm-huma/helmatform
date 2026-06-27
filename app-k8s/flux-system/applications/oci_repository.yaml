@@ -4,7 +4,7 @@ metadata:
   name: helmatform-chart
   namespace: flux-system
 spec:
-  interval: 5m0s
+  interval: 10s
   url: oci://ghcr.io/hojatm-huma/helmatform-chart
   layerSelector:
     mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"

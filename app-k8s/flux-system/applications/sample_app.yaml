@@ -11,7 +11,7 @@ metadata:
   name: sample-app
   namespace: sample-app
 spec:
-  interval: 1m
+  interval: 10s
   url: https://github.com/hojatm-huma/sample-app
   ref:
     branch: main
@@ -47,7 +47,7 @@ metadata:
   name: sample-app
   namespace: sample-app
 spec:
-  interval: 1m
+  interval: 10s
   chartRef:
     kind: ExternalArtifact
     name: sample-app
