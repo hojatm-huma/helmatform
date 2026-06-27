@@ -84,8 +84,12 @@ TODOs:
 [x] write helm chart generator
 	write a python script to read tf-modules folder and create appropriate value file
 [] update documentation to contain new changes
-[] clean up flux yaml file folders and main kustomization
-[] use irsa instead of long lived aws tokens
+-- write how to setup
+-- draw architecture
+-- why?
+
+Next Steps:
+[] use pod identity agent instead of long lived aws tokens
 
 ----
 how to make flux watch all dirs and subdirs?
