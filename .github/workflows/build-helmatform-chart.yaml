@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "chart"
+      - "tf-modules"
       - ".github/workflows/build-helmatform-chart.yaml"
 
   workflow_dispatch:
