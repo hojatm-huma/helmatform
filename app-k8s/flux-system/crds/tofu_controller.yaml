@@ -1,4 +1,3 @@
----
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
@@ -20,7 +19,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: tofu-controller
-      version: '>=0.16.4'
+      version: ">=0.16.4"
   interval: 1h0s
   releaseName: tofu-controller
   targetNamespace: flux-system
@@ -56,47 +55,3 @@ spec:
         allowedNamespaces:
           - sample-app
           - flux-system
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
-metadata:
-  name: helmatform
-  namespace: flux-system
-spec:
-  interval: 1m
-  url: https://github.com/hojatm-huma/helmatform
-  ref:
-    branch: main
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: sample-app-s3
-  namespace: sample-app
-data:
-  bucket_name: helmatform-sample-app-s3-in-ns
-  iam_user_name: helmatform-sample-app-s3-in-ns
----
-apiVersion: infra.contrib.fluxcd.io/v1alpha2
-kind: Terraform
-metadata:
-  name: sample-app-s3
-  namespace: sample-app
-spec:
-  interval: 5s
-  approvePlan: auto
-  path: ./tf-modules/s3/
-  sourceRef:
-    kind: GitRepository
-    name: helmatform
-    namespace: flux-system
-  varsFrom:
-    - kind: ConfigMap
-      name: sample-app-s3
-  writeOutputsToSecret:
-    name: sample-app-s3-outputs
-  runnerPodTemplate:
-    spec:
-      envFrom:
-        - secretRef:
-            name: aws-creds
