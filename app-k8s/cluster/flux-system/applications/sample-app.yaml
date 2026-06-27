@@ -6,8 +6,6 @@ metadata:
 spec:
   interval: 5m0s
   url: oci://ghcr.io/hojatm-huma/helmatform-chart
-  secretRef:
-    name: ghcr-secret
   layerSelector:
     mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
     operation: copy
