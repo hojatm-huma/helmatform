@@ -1,101 +1,49 @@
-![Architecture](docs/helmatform.jpg)
-folder structure:
+## Helmatform: your platform defined using Helm
 
-```
-.github
-	build helm
-	build crd
-charts
-	base
-resources
-	s3
-crds
-	terraform-applier
-init
-	s3-terraform-backend
-```
+I was thinking about how we could put all the dependencies of a project in a single YAML file. This way, anyone looking at the file can understand how the project works, end to end.
 
-chart generator:
+There are already many interesting tools that let you define a project's dependencies using a YAML file, like Render or Heroku. But they are too general, so companies still end up building their own platform on top. How can we have a base for a custom platform instead?
 
-- creates a yaml file:
+We're already doing some kind of customization with Helm, right? So let's take it further and use Helm to build the whole infrastructure.
 
-```
-kind: folder_name
-spec:
-	var_name: {{values.s3.var_name}}
----
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-	name: s3-config
-spec:
-	target:
-		name: {{CENTRAL_SECRET}}
-		mode: append
-	data:
-		- secretKey: {{S3_EXTERNAL_SECRET}}
+## Be more specific? Why Helmatform?
+
+- **Every dependency of the project is defined in a single YAML file:** From cloud resources to monitoring dashboards, everything is defined in one YAML file, customized for the company.
+- **Low learning curve for platform developers:** New joiners only need to learn Helm, Flux, and Terraform. No new system, no new programming language.
+- **Low learning curve for users:** Users of the platform only need to learn the YAML interface, customized for the company's resources.
+- **Already provisioned resources are importable:** Just create the Terraform module and import the state file into the Tofu state, and your existing resources become manageable by Helmatform.
+- **Import provisioned resources into your local machine:** Easily import provisioned resources into your local Terraform code and start debugging right away.
+- **It's almost headless:** Helmatform doesn't run any bespoke service. It relies on open source software that is well maintained and proven in production.
+- **Clear separation between customization and standards:** The infra team writes Terraform modules that handle company standards and set defaults in the base values file for services to build on.
+
+## How to run the project?
+
+1. Set up Kubernetes
+
+```bash
+cd app-k8s/k8s-tf
+terraform init
+terraform apply
 ```
 
-- create the value file:
-  - read the base value file
-  - append this to it:
+2. Set up Flux for Kubernetes
 
-```
-folder_name:
-	create: false
-	var_name: empty_of_its_type
+```bash
+cd app-k8s/fluxcd-tf
+terraform init
+terraform apply
 ```
 
-TODOs:
-[ ] write the crd to apply helm - spec: - should apply the terraform - put the result somewhere - create a configmap containing outputs sensitive=false - create a secret containing outputs sensitive=true - questions: - should the crd spawn a job to apply to terraform? - where should we put the result of apply? in the events part?
-[ ] setup minikube to install the crd
-[ ] write s3 spec
-[ ] write base helm chart
-[ ] write helm chart builder
-[ ] write a sample react app
-[ ] deploy the app
+3. Create the `aws-creds` secret in the applications namespace
 
----
-
-```
-tf-modules/s3:
-s3.tf
-output.tf --> writes output to external secret
----
-helm generator creates an ExternalSecret yaml file, reading from this external secret and appending the secrets of this module to the central secret
+```bash
+cd app-k8s/aws-secrets-tf
+terraform init
+terraform apply
 ```
 
-Why?
-- we need to import our current stack into this platform
-- How can we make it easy for different companies to easily adapt it and customize it for themselves
-- our developers needs to learn only yaml
-- the yaml spec is well talked about in the company
-- don't reinvent the wheel at all. Use any opensource tool that is possible
+That's it! You should now have the S3 bucket created and `sample-app` deployed. Check its logs to see a successful connection.
 
-Dev environment:
-- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+## Next Steps
 
-TODOs:
-[X] s3 module: create a s3 and store credentials in an externalsecret
-[X] setup the dev env ( minikube, aws creds )
-[x] make tofu apply the helm in minikube (to learn what is the proper syntax for helm chart)
-[x] move tofu runner into a separate namespace
-	Tofu is now creating resources and creating the output secret in the correct namespace. But aws-cres is added to the application ns. It's not good. We should find a solution for it. (Maybe IRSA)
-[x] write helm chart generator
-	write a python script to read tf-modules folder and create appropriate value file
-[] update documentation to contain new changes
--- write how to setup
--- draw architecture
--- why?
-
-Next Steps:
-[] use pod identity agent instead of long lived aws tokens
-
-----
-how to make flux watch all dirs and subdirs?
-setup kind
-can we use existing github path with files?
-
-guide:
-1. setup kind
-2. setup flux cd
+- [ ] Use the pod identity agent instead of long-lived AWS tokens
